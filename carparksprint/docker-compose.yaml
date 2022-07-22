@@ -1,0 +1,29 @@
+version: "3.1"
+services:
+  car-park-app:
+    container_name: car-park
+    image: aditya0024/car-park-app
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    environment:
+      WAIT_HOSTS: mysql:3306
+    depends_on:
+      - docker-mysql
+
+  docker-mysql:
+    container_name: docker-mysql
+    image: mysql
+    restart: always
+    ports:
+      - "6666:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: "%"
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: '/user/bin/mysql --user=root --password=root --execute \"SHOW DATABASES \"'
+      interval: 4s
+      timeout: 20s
+      retries: 5
