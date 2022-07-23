@@ -86,9 +86,6 @@ public class CustomerServiceImpl implements CustomerService {
 				center.get().setBooked(x+1);
 				int y = parking.getParkingHours();
 				parking.setBillAmount((double) (y*70));
-				parking.setParkingCenter(center.get());
-				long z = (long)Math.random()*(50-1+1)+1;
-				parking.setTokenId(z);
 				int i = center.get().getCapacity()-center.get().getBooked(); 
 				center.get().setAvailableSpot(i);
 				if(i>0)
@@ -102,7 +99,7 @@ public class CustomerServiceImpl implements CustomerService {
 			}
 			Optional<Customer> customer = customerRepo.findById(customerId);
 			parking.setCustomer(customer.get());
-			
+			parking.setParkingCenter(center.get());
 			return parkRepo.save(parking);
 		}
 		

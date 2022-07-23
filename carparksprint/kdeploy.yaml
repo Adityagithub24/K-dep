@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: car-park-app
+  labels:
+       app: car-park-app
+spec:
+  replicas: 3
+  template:
+    metadata:
+      name: car-park-app
+      labels:
+        app: car-park-app
+    spec:
+      containers:
+        - name: carparksprint
+          image: aditya0024/kdepcarparksprint
+  selector:
+    matchLabels:
+      app: car-park-app
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: appservice
+spec:
+  type : NodePort
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30101
+  selector:
+    app: car-park-app
