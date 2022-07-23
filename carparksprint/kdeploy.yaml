@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: carparksprint
-          image: aditya0024/kdepcarparksprint
+          image: aditya0024/kcarparksprint
   selector:
     matchLabels:
       app: car-park-app
